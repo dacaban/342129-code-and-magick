@@ -5,6 +5,17 @@ var WIZARD_LASTNAMES = ['да Марья', 'Верон', 'Мирабелла', '
 var WIZARD_COATS = ['rgb(101, 137, 164)', 'rgb(241, 43, 107)', 'rgb(146, 100, 161)', 'rgb(56, 159, 117)', 'rgb(215, 210, 55)', 'rgb(0, 0, 0)'];
 var WIZARD_EYES = ['black', 'red', 'blue', 'yellow', 'green'];
 
+var generateWizard = function () {
+  var newWizardName = WIZARD_NAMES[Math.floor(Math.random() * (WIZARD_NAMES.length))] + ' ' + WIZARD_LASTNAMES[Math.floor(Math.random() * (WIZARD_LASTNAMES.length))];
+  var newWizardCoat = WIZARD_COATS[Math.floor(Math.random() * (WIZARD_COATS.length))];
+  var newWizardEyes = WIZARD_EYES[Math.floor(Math.random() * (WIZARD_EYES.length))];
+  return {
+    name: newWizardName,
+    coatColor: newWizardCoat,
+    eyesColor: newWizardEyes
+  };
+};
+
 var userDialog = document.querySelector('.setup');
 userDialog.classList.remove('hidden');
 
