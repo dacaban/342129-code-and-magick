@@ -6,9 +6,9 @@ var WIZARD_COATS = ['rgb(101, 137, 164)', 'rgb(241, 43, 107)', 'rgb(146, 100, 16
 var WIZARD_EYES = ['black', 'red', 'blue', 'yellow', 'green'];
 
 var generateWizard = function () {
-  var newWizardName = WIZARD_NAMES[Math.floor(Math.random() * (WIZARD_NAMES.length))] + ' ' + WIZARD_LASTNAMES[Math.floor(Math.random() * (WIZARD_LASTNAMES.length))];
-  var newWizardCoat = WIZARD_COATS[Math.floor(Math.random() * (WIZARD_COATS.length))];
-  var newWizardEyes = WIZARD_EYES[Math.floor(Math.random() * (WIZARD_EYES.length))];
+  var newWizardName = WIZARD_NAMES[Math.floor(Math.random() * WIZARD_NAMES.length)] + ' ' + WIZARD_LASTNAMES[Math.floor(Math.random() * WIZARD_LASTNAMES.length)];
+  var newWizardCoat = WIZARD_COATS[Math.floor(Math.random() * WIZARD_COATS.length)];
+  var newWizardEyes = WIZARD_EYES[Math.floor(Math.random() * WIZARD_EYES.length)];
   return {
     name: newWizardName,
     coatColor: newWizardCoat,
@@ -32,6 +32,7 @@ var renderWizard = function (wizard) {
   var wizardElement = similarWizardTemplate.cloneNode(true);
   wizardElement.querySelector('.setup-similar-label').textContent = wizard.name;
   wizardElement.querySelector('.wizard-coat').style.fill = wizard.coatColor;
+  wizardElement.querySelector('.wizard-eyes').style.fill = wizard.eyesColor;
   return wizardElement;
 };
 
