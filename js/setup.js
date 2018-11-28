@@ -20,7 +20,7 @@ var userDialog = document.querySelector('.setup');
 var userDialogOpen = document.querySelector('.setup-open');
 var userDialogClose = userDialog.querySelector('.setup-close');
 
-userDialogOpen.addEventListener('click', function () {
+var openPopup = function () {
   userDialog.classList.remove('hidden');
 
   document.addEventListener('keydown', function (evt) {
@@ -28,22 +28,30 @@ userDialogOpen.addEventListener('click', function () {
       userDialog.classList.add('hidden');
     }
   });
+};
+
+var closePopup = function () {
+  userDialog.classList.add('hidden');
+};
+
+userDialogOpen.addEventListener('click', function () {
+  openPopup();
 });
 
 userDialogOpen.addEventListener('keydown', function (evt) {
   if (evt.keyCode === 13) {
-    userDialog.classList.remove('hidden');
+    openPopup();
   }
 });
 
 userDialogClose.addEventListener('keydown', function (evt) {
   if (evt.keyCode === 13) {
-    userDialog.classList.add('hidden');
+    closePopup();
   }
 });
 
 userDialogClose.addEventListener('click', function () {
-  userDialog.classList.add('hidden');
+  closePopup();
 });
 
 var similarListElement = document.querySelector('.setup-similar-list');
