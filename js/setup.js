@@ -36,6 +36,12 @@ userDialogOpen.addEventListener('keydown', function (evt) {
   }
 });
 
+userDialogClose.addEventListener('keydown', function (evt) {
+  if (evt.keyCode === 13) {
+    userDialog.classList.add('hidden');
+  }
+});
+
 userDialogClose.addEventListener('click', function () {
   userDialog.classList.add('hidden');
 });
