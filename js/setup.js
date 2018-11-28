@@ -17,7 +17,11 @@ var generateWizard = function () {
 };
 
 var userDialog = document.querySelector('.setup');
-userDialog.classList.remove('hidden');
+var userDialogOpen = document.querySelector('.setup-open');
+
+userDialogOpen.addEventListener('click', function () {
+  userDialog.classList.remove('hidden');
+});
 
 var similarListElement = document.querySelector('.setup-similar-list');
 
