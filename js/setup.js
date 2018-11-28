@@ -18,9 +18,14 @@ var generateWizard = function () {
 
 var userDialog = document.querySelector('.setup');
 var userDialogOpen = document.querySelector('.setup-open');
+var userDialogClose = userDialog.querySelector('.setup-close');
 
 userDialogOpen.addEventListener('click', function () {
   userDialog.classList.remove('hidden');
+});
+
+userDialogClose.addEventListener('click', function () {
+  userDialog.classList.add('hidden');
 });
 
 var similarListElement = document.querySelector('.setup-similar-list');
