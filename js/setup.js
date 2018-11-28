@@ -22,6 +22,12 @@ var userDialogClose = userDialog.querySelector('.setup-close');
 
 userDialogOpen.addEventListener('click', function () {
   userDialog.classList.remove('hidden');
+
+  document.addEventListener('keydown', function (evt) {
+    if (evt.keyCode === 27) {
+      userDialog.classList.add('hidden');
+    }
+  });
 });
 
 userDialogClose.addEventListener('click', function () {
