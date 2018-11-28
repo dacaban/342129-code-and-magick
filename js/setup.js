@@ -20,18 +20,20 @@ var userDialog = document.querySelector('.setup');
 var userDialogOpen = document.querySelector('.setup-open');
 var userDialogClose = userDialog.querySelector('.setup-close');
 
+var onPopupEscPress = function (evt) {
+  if (evt.keyCode === 27) {
+    closePopup();
+  }
+};
+
 var openPopup = function () {
   userDialog.classList.remove('hidden');
-
-  document.addEventListener('keydown', function (evt) {
-    if (evt.keyCode === 27) {
-      userDialog.classList.add('hidden');
-    }
-  });
+  document.addEventListener('keydown', onPopupEscPress);
 };
 
 var closePopup = function () {
   userDialog.classList.add('hidden');
+  document.addEventListener('keydown', onPopupEscPress);
 };
 
 userDialogOpen.addEventListener('click', function () {
