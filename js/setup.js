@@ -4,6 +4,7 @@ var WIZARD_NAMES = ['Иван', 'Хуан Себастьян', 'Мария', 'К
 var WIZARD_LASTNAMES = ['да Марья', 'Верон', 'Мирабелла', 'Вальц', 'Онопко', 'Топольницкая', 'Нионго', 'Ирвинг'];
 var WIZARD_COATS = ['rgb(101, 137, 164)', 'rgb(241, 43, 107)', 'rgb(146, 100, 161)', 'rgb(56, 159, 117)', 'rgb(215, 210, 55)', 'rgb(0, 0, 0)'];
 var WIZARD_EYES = ['black', 'red', 'blue', 'yellow', 'green'];
+var WIZARD_FIREBALL = ['#ee4830', '#30a8ee', '#5ce6c0', '#e848d5', '#e6e848'];
 var ESC_KEYCODE = 27;
 var ENTER_KEYCODE = 13;
 
@@ -51,6 +52,7 @@ userDialogClose.addEventListener('click', function () {
 var userWizard = userDialog.querySelector('.setup-wizard');
 var userWizardCoat = userWizard.querySelector('.wizard-coat');
 var userWizardEyes = userWizard.querySelector('.wizard-eyes');
+var userWizardFireball = userDialog.querySelector('.setup-fireball-wrap');
 
 var clickCoatCounter = 1;
 userWizardCoat.addEventListener('click', function () {
@@ -63,11 +65,20 @@ userWizardCoat.addEventListener('click', function () {
 
 var clickEyesCounter = 1;
 userWizardEyes.addEventListener('click', function () {
-  if (clickEyesCounter >= WIZARD_COATS.length) {
+  if (clickEyesCounter >= WIZARD_EYES.length) {
     clickEyesCounter = 0;
   }
   userWizardEyes.style.fill = WIZARD_EYES[clickEyesCounter];
   clickEyesCounter++;
+});
+
+var clickFireballCounter = 1;
+userWizardFireball.addEventListener('click', function () {
+  if (clickFireballCounter >= WIZARD_FIREBALL.length) {
+    clickFireballCounter = 0;
+  }
+  userWizardFireball.style.background = WIZARD_FIREBALL[clickFireballCounter];
+  clickFireballCounter++;
 });
 
 var generateWizard = function () {
