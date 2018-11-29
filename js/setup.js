@@ -50,14 +50,24 @@ userDialogClose.addEventListener('click', function () {
 
 var userWizard = userDialog.querySelector('.setup-wizard');
 var userWizardCoat = userWizard.querySelector('.wizard-coat');
+var userWizardEyes = userWizard.querySelector('.wizard-eyes');
 
-var clickCounter = 1;
+var clickCoatCounter = 1;
 userWizardCoat.addEventListener('click', function () {
-  if (clickCounter >= WIZARD_COATS.length) {
-    clickCounter = 0;
+  if (clickCoatCounter >= WIZARD_COATS.length) {
+    clickCoatCounter = 0;
   }
-  userWizardCoat.style.fill = WIZARD_COATS[clickCounter];
-  clickCounter++;
+  userWizardCoat.style.fill = WIZARD_COATS[clickCoatCounter];
+  clickCoatCounter++;
+});
+
+var clickEyesCounter = 1;
+userWizardEyes.addEventListener('click', function () {
+  if (clickEyesCounter >= WIZARD_COATS.length) {
+    clickEyesCounter = 0;
+  }
+  userWizardEyes.style.fill = WIZARD_EYES[clickEyesCounter];
+  clickEyesCounter++;
 });
 
 var generateWizard = function () {
