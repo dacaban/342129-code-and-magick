@@ -4,7 +4,7 @@ var WIZARD_NAMES = ['Иван', 'Хуан Себастьян', 'Мария', 'К
 var WIZARD_LASTNAMES = ['да Марья', 'Верон', 'Мирабелла', 'Вальц', 'Онопко', 'Топольницкая', 'Нионго', 'Ирвинг'];
 var WIZARD_COATS = ['rgb(101, 137, 164)', 'rgb(241, 43, 107)', 'rgb(146, 100, 161)', 'rgb(56, 159, 117)', 'rgb(215, 210, 55)', 'rgb(0, 0, 0)'];
 var WIZARD_EYES = ['black', 'red', 'blue', 'yellow', 'green'];
-var WIZARD_FIREBALL = ['#ee4830', '#30a8ee', '#5ce6c0', '#e848d5', '#e6e848'];
+var WIZARD_FIREBALLS = ['#ee4830', '#30a8ee', '#5ce6c0', '#e848d5', '#e6e848'];
 var ESC_KEYCODE = 27;
 var ENTER_KEYCODE = 13;
 
@@ -53,6 +53,9 @@ var userWizard = userDialog.querySelector('.setup-wizard');
 var userWizardCoat = userWizard.querySelector('.wizard-coat');
 var userWizardEyes = userWizard.querySelector('.wizard-eyes');
 var userWizardFireball = userDialog.querySelector('.setup-fireball-wrap');
+var coatColorInput = userDialog.querySelector('input[name="coat-color"]');
+var eyesColorInput = userDialog.querySelector('input[name="eyes-color"]');
+var fireballColorInput = userDialog.querySelector('input[name="fireball-color"]');
 
 var clickCoatCounter = 1;
 userWizardCoat.addEventListener('click', function () {
@@ -60,6 +63,7 @@ userWizardCoat.addEventListener('click', function () {
     clickCoatCounter = 0;
   }
   userWizardCoat.style.fill = WIZARD_COATS[clickCoatCounter];
+  coatColorInput.value = WIZARD_COATS[clickCoatCounter];
   clickCoatCounter++;
 });
 
@@ -69,15 +73,17 @@ userWizardEyes.addEventListener('click', function () {
     clickEyesCounter = 0;
   }
   userWizardEyes.style.fill = WIZARD_EYES[clickEyesCounter];
+  eyesColorInput.value = WIZARD_EYES[clickEyesCounter];
   clickEyesCounter++;
 });
 
 var clickFireballCounter = 1;
 userWizardFireball.addEventListener('click', function () {
-  if (clickFireballCounter >= WIZARD_FIREBALL.length) {
+  if (clickFireballCounter >= WIZARD_FIREBALLS.length) {
     clickFireballCounter = 0;
   }
-  userWizardFireball.style.background = WIZARD_FIREBALL[clickFireballCounter];
+  userWizardFireball.style.background = WIZARD_FIREBALLS[clickFireballCounter];
+  fireballColorInput.value = WIZARD_FIREBALLS[clickFireballCounter];
   clickFireballCounter++;
 });
 
