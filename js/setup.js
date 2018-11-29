@@ -21,9 +21,10 @@ var generateWizard = function () {
 var userDialog = document.querySelector('.setup');
 var userDialogOpen = document.querySelector('.setup-open');
 var userDialogClose = userDialog.querySelector('.setup-close');
+var userDialogInput = userDialog.querySelector('.setup-user-name');
 
 var onPopupEscPress = function (evt) {
-  if (evt.keyCode === ESC_KEYCODE) {
+  if ((evt.keyCode === ESC_KEYCODE) && (document.activeElement !== userDialogInput)) {
     closePopup();
   }
 };
