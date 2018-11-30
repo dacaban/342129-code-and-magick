@@ -5,8 +5,10 @@ var WIZARD_LASTNAMES = ['да Марья', 'Верон', 'Мирабелла', '
 var WIZARD_COATS = ['rgb(101, 137, 164)', 'rgb(241, 43, 107)', 'rgb(146, 100, 161)', 'rgb(56, 159, 117)', 'rgb(215, 210, 55)', 'rgb(0, 0, 0)'];
 var WIZARD_EYES = ['black', 'red', 'blue', 'yellow', 'green'];
 var WIZARD_FIREBALLS = ['#ee4830', '#30a8ee', '#5ce6c0', '#e848d5', '#e6e848'];
+var SIMILAR_WIZARD = 4;
 var ESC_KEYCODE = 27;
 var ENTER_KEYCODE = 13;
+
 
 var userDialog = document.querySelector('.setup');
 var userDialogOpen = document.querySelector('.setup-open');
@@ -56,15 +58,22 @@ var userWizardFireball = userDialog.querySelector('.setup-fireball-wrap');
 var coatColorInput = userDialog.querySelector('input[name="coat-color"]');
 var eyesColorInput = userDialog.querySelector('input[name="eyes-color"]');
 var fireballColorInput = userDialog.querySelector('input[name="fireball-color"]');
+var counters = {
+  coat: 1,
+  eyes: 1
+};
 
-var clickCoatCounter = 1;
-userWizardCoat.addEventListener('click', function () {
-  if (clickCoatCounter >= WIZARD_COATS.length) {
-    clickCoatCounter = 0;
+var renderColor = function (element, colorArray, clickCounter, colorInput) {
+  if (clickCounter >= colorArray.length) {
+    clickCounter = 0;
   }
-  userWizardCoat.style.fill = WIZARD_COATS[clickCoatCounter];
-  coatColorInput.value = WIZARD_COATS[clickCoatCounter];
-  clickCoatCounter++;
+  element.style.fill = colorArray[clickCounter];
+  colorInput.value = colorArray[clickCounter];
+  clickCounter++;
+};
+
+userWizardCoat.addEventListener('click', function () {
+  renderColor(userWizardCoat, WIZARD_COATS, counters.coat, coatColorInput);
 });
 
 var clickEyesCounter = 1;
@@ -103,7 +112,7 @@ var similarListElement = document.querySelector('.setup-similar-list');
 var similarWizardTemplate = document.querySelector('#similar-wizard-template').content.querySelector('.setup-similar-item');
 
 var wizards = [];
-for (var i = 0; i < 4; i++) {
+for (var i = 0; i < SIMILAR_WIZARD; i++) {
   wizards[i] = generateWizard();
 }
 
