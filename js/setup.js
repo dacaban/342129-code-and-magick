@@ -5,7 +5,7 @@ var WIZARD_LASTNAMES = ['да Марья', 'Верон', 'Мирабелла', '
 var WIZARD_COATS = ['rgb(101, 137, 164)', 'rgb(241, 43, 107)', 'rgb(146, 100, 161)', 'rgb(56, 159, 117)', 'rgb(215, 210, 55)', 'rgb(0, 0, 0)'];
 var WIZARD_EYES = ['black', 'red', 'blue', 'yellow', 'green'];
 var WIZARD_FIREBALLS = ['#ee4830', '#30a8ee', '#5ce6c0', '#e848d5', '#e6e848'];
-var SIMILAR_WIZARD = 4;
+var SIMILAR_WIZARDS = 4;
 var ESC_KEYCODE = 27;
 var ENTER_KEYCODE = 13;
 
@@ -112,7 +112,7 @@ var similarListElement = document.querySelector('.setup-similar-list');
 var similarWizardTemplate = document.querySelector('#similar-wizard-template').content.querySelector('.setup-similar-item');
 
 var wizards = [];
-for (var i = 0; i < SIMILAR_WIZARD; i++) {
+for (var i = 0; i < SIMILAR_WIZARDS; i++) {
   wizards[i] = generateWizard();
 }
 
