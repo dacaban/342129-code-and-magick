@@ -64,26 +64,19 @@ var counters = {
 };
 
 var renderColor = function (element, colorArray, clickCounter, colorInput) {
-  if (clickCounter >= colorArray.length) {
-    clickCounter = 0;
-  }
-  element.style.fill = colorArray[clickCounter];
-  colorInput.value = colorArray[clickCounter];
-  clickCounter++;
+  var index = clickCounter % colorArray.length;
+  element.style.fill = colorArray[index];
+  colorInput.value = colorArray[index];
 };
 
 userWizardCoat.addEventListener('click', function () {
   renderColor(userWizardCoat, WIZARD_COATS, counters.coat, coatColorInput);
+  counters.coat++;
 });
 
-var clickEyesCounter = 1;
 userWizardEyes.addEventListener('click', function () {
-  if (clickEyesCounter >= WIZARD_EYES.length) {
-    clickEyesCounter = 0;
-  }
-  userWizardEyes.style.fill = WIZARD_EYES[clickEyesCounter];
-  eyesColorInput.value = WIZARD_EYES[clickEyesCounter];
-  clickEyesCounter++;
+  renderColor(userWizardEyes, WIZARD_EYES, counters.eyes, eyesColorInput);
+  counters.eyes++;
 });
 
 var clickFireballCounter = 1;
