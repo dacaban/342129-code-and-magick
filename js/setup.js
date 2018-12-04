@@ -8,12 +8,20 @@ var WIZARD_FIREBALLS = ['#ee4830', '#30a8ee', '#5ce6c0', '#e848d5', '#e6e848'];
 var SIMILAR_WIZARDS = 4;
 var ESC_KEYCODE = 27;
 var ENTER_KEYCODE = 13;
+// TODO: Достать из верстки живые данные
+var POPUP_POSITIOM_LEFT = '50%';
+var POPUP_POSITION_TOP = '80px';
 
 
 var userDialog = document.querySelector('.setup');
 var userDialogOpen = document.querySelector('.setup-open');
 var userDialogClose = userDialog.querySelector('.setup-close');
 var userDialogInput = userDialog.querySelector('.setup-user-name');
+
+var startCoordsPopup = {
+  x: POPUP_POSITIOM_LEFT,
+  y: POPUP_POSITION_TOP
+};
 
 var onPopupEscPress = function (evt) {
   if ((evt.keyCode === ESC_KEYCODE) && (document.activeElement !== userDialogInput)) {
@@ -29,6 +37,8 @@ var openPopup = function () {
 var closePopup = function () {
   userDialog.classList.add('hidden');
   document.addEventListener('keydown', onPopupEscPress);
+  userDialog.style.top = startCoordsPopup.y;
+  userDialog.style.left = startCoordsPopup.x;
 };
 
 userDialogOpen.addEventListener('click', function () {
@@ -124,3 +134,50 @@ for (i = 0; i < wizards.length; i++) {
 similarListElement.appendChild(fragment);
 
 userDialog.querySelector('.setup-similar').classList.remove('hidden');
+
+var dialogHandler = userDialog.querySelector('.upload');
+
+dialogHandler.addEventListener('mousedown', function (evt) {
+  evt.preventDefault();
+  var startCoords = {
+    x: evt.clientX,
+    y: evt.clientY
+  };
+  var dragged = false;
+
+  var onMouseMove = function (moveEvt) {
+    moveEvt.preventDefault();
+    dragged = true;
+
+    var shift = {
+      x: startCoords.x - moveEvt.clientX,
+      y: startCoords.y - moveEvt.clientY
+    };
+
+    startCoords = {
+      x: moveEvt.clientX,
+      y: moveEvt.clientY
+    };
+
+    userDialog.style.top = (userDialog.offsetTop - shift.y) + 'px';
+    userDialog.style.left = (userDialog.offsetLeft - shift.x) + 'px';
+  };
+
+  var onMouseUp = function (upEvt) {
+    upEvt.preventDefault();
+
+    if (dragged) {
+      var onClickPreventDefault = function (clickEvt) {
+        clickEvt.preventDefault();
+        dialogHandler.removeEventListener('click', onClickPreventDefault);
+      };
+      dialogHandler.addEventListener('click', onClickPreventDefault);
+    }
+
+    document.removeEventListener('mousemove', onMouseMove);
+    document.removeEventListener('mouseup', onMouseUp);
+  };
+
+  document.addEventListener('mousemove', onMouseMove);
+  document.addEventListener('mouseup', onMouseUp);
+});
