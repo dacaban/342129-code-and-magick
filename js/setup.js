@@ -8,9 +8,6 @@ var WIZARD_FIREBALLS = ['#ee4830', '#30a8ee', '#5ce6c0', '#e848d5', '#e6e848'];
 var SIMILAR_WIZARDS = 4;
 var ESC_KEYCODE = 27;
 var ENTER_KEYCODE = 13;
-// TODO: Достать из верстки живые данные
-var POPUP_POSITIOM_LEFT = '50%';
-var POPUP_POSITION_TOP = '80px';
 
 
 var userDialog = document.querySelector('.setup');
@@ -19,8 +16,8 @@ var userDialogClose = userDialog.querySelector('.setup-close');
 var userDialogInput = userDialog.querySelector('.setup-user-name');
 
 var startCoordsPopup = {
-  x: POPUP_POSITIOM_LEFT,
-  y: POPUP_POSITION_TOP
+  x: 0,
+  y: 0
 };
 
 var onPopupEscPress = function (evt) {
@@ -32,13 +29,17 @@ var onPopupEscPress = function (evt) {
 var openPopup = function () {
   userDialog.classList.remove('hidden');
   document.addEventListener('keydown', onPopupEscPress);
+  if ((startCoordsPopup.x === 0) && (startCoordsPopup.y === 0)) {
+    startCoordsPopup.x = userDialog.offsetLeft;
+    startCoordsPopup.y = userDialog.offsetTop;
+  }
 };
 
 var closePopup = function () {
   userDialog.classList.add('hidden');
   document.addEventListener('keydown', onPopupEscPress);
-  userDialog.style.top = startCoordsPopup.y;
-  userDialog.style.left = startCoordsPopup.x;
+  userDialog.style.top = startCoordsPopup.y + 'px';
+  userDialog.style.left = startCoordsPopup.x + 'px';
 };
 
 userDialogOpen.addEventListener('click', function () {
