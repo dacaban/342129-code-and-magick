@@ -15,6 +15,11 @@ var userDialogOpen = document.querySelector('.setup-open');
 var userDialogClose = userDialog.querySelector('.setup-close');
 var userDialogInput = userDialog.querySelector('.setup-user-name');
 
+var startCoordsPopup = {
+  x: 0,
+  y: 0
+};
+
 var onPopupEscPress = function (evt) {
   if ((evt.keyCode === ESC_KEYCODE) && (document.activeElement !== userDialogInput)) {
     closePopup();
@@ -24,11 +29,17 @@ var onPopupEscPress = function (evt) {
 var openPopup = function () {
   userDialog.classList.remove('hidden');
   document.addEventListener('keydown', onPopupEscPress);
+  if ((startCoordsPopup.x === 0) && (startCoordsPopup.y === 0)) {
+    startCoordsPopup.x = userDialog.offsetLeft;
+    startCoordsPopup.y = userDialog.offsetTop;
+  }
 };
 
 var closePopup = function () {
   userDialog.classList.add('hidden');
   document.addEventListener('keydown', onPopupEscPress);
+  userDialog.style.top = startCoordsPopup.y + 'px';
+  userDialog.style.left = startCoordsPopup.x + 'px';
 };
 
 userDialogOpen.addEventListener('click', function () {
@@ -60,40 +71,30 @@ var eyesColorInput = userDialog.querySelector('input[name="eyes-color"]');
 var fireballColorInput = userDialog.querySelector('input[name="fireball-color"]');
 var counters = {
   coat: 1,
-  eyes: 1
+  eyes: 1,
+  fireball: 1
 };
 
-var renderColor = function (element, colorArray, clickCounter, colorInput) {
-  if (clickCounter >= colorArray.length) {
-    clickCounter = 0;
+var renderColor = function (elm, collection, key, colorInput, isSvgElement) {
+  var idx = counters[key];
+  elm.style[isSvgElement ? 'fill' : 'background'] = colorInput.value = collection[idx];
+  if (idx === collection.length - 1) {
+    counters[key] = 0;
+    return;
   }
-  element.style.fill = colorArray[clickCounter];
-  colorInput.value = colorArray[clickCounter];
-  clickCounter++;
+  counters[key]++;
 };
 
 userWizardCoat.addEventListener('click', function () {
-  renderColor(userWizardCoat, WIZARD_COATS, counters.coat, coatColorInput);
+  renderColor(userWizardCoat, WIZARD_COATS, 'coat', coatColorInput, true);
 });
 
-var clickEyesCounter = 1;
 userWizardEyes.addEventListener('click', function () {
-  if (clickEyesCounter >= WIZARD_EYES.length) {
-    clickEyesCounter = 0;
-  }
-  userWizardEyes.style.fill = WIZARD_EYES[clickEyesCounter];
-  eyesColorInput.value = WIZARD_EYES[clickEyesCounter];
-  clickEyesCounter++;
+  renderColor(userWizardEyes, WIZARD_EYES, 'eyes', eyesColorInput, true);
 });
 
-var clickFireballCounter = 1;
 userWizardFireball.addEventListener('click', function () {
-  if (clickFireballCounter >= WIZARD_FIREBALLS.length) {
-    clickFireballCounter = 0;
-  }
-  userWizardFireball.style.background = WIZARD_FIREBALLS[clickFireballCounter];
-  fireballColorInput.value = WIZARD_FIREBALLS[clickFireballCounter];
-  clickFireballCounter++;
+  renderColor(userWizardFireball, WIZARD_FIREBALLS, 'fireball', fireballColorInput);
 });
 
 var generateWizard = function () {
@@ -131,3 +132,50 @@ for (i = 0; i < wizards.length; i++) {
 similarListElement.appendChild(fragment);
 
 userDialog.querySelector('.setup-similar').classList.remove('hidden');
+
+var dialogHandler = userDialog.querySelector('.upload');
+
+dialogHandler.addEventListener('mousedown', function (evt) {
+  evt.preventDefault();
+  var startCoords = {
+    x: evt.clientX,
+    y: evt.clientY
+  };
+  var dragged = false;
+
+  var onMouseMove = function (moveEvt) {
+    moveEvt.preventDefault();
+    dragged = true;
+
+    var shift = {
+      x: startCoords.x - moveEvt.clientX,
+      y: startCoords.y - moveEvt.clientY
+    };
+
+    startCoords = {
+      x: moveEvt.clientX,
+      y: moveEvt.clientY
+    };
+
+    userDialog.style.top = (userDialog.offsetTop - shift.y) + 'px';
+    userDialog.style.left = (userDialog.offsetLeft - shift.x) + 'px';
+  };
+
+  var onMouseUp = function (upEvt) {
+    upEvt.preventDefault();
+
+    if (dragged) {
+      var onClickPreventDefault = function (clickEvt) {
+        clickEvt.preventDefault();
+        dialogHandler.removeEventListener('click', onClickPreventDefault);
+      };
+      dialogHandler.addEventListener('click', onClickPreventDefault);
+    }
+
+    document.removeEventListener('mousemove', onMouseMove);
+    document.removeEventListener('mouseup', onMouseUp);
+  };
+
+  document.addEventListener('mousemove', onMouseMove);
+  document.addEventListener('mouseup', onMouseUp);
+});
