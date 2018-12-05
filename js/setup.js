@@ -71,33 +71,30 @@ var eyesColorInput = userDialog.querySelector('input[name="eyes-color"]');
 var fireballColorInput = userDialog.querySelector('input[name="fireball-color"]');
 var counters = {
   coat: 1,
-  eyes: 1
+  eyes: 1,
+  fireball: 1
 };
 
-var renderColor = function (element, colorArray, clickCounter, colorInput) {
-  var index = clickCounter % colorArray.length;
-  element.style.fill = colorArray[index];
-  colorInput.value = colorArray[index];
+var renderColor = function (elm, collection, key, colorInput, isSvgElement) {
+  var idx = counters[key];
+  elm.style[isSvgElement ? 'fill' : 'background'] = colorInput.value = collection[idx];
+  if (idx === collection.length - 1) {
+    counters[key] = 0;
+    return;
+  }
+  counters[key]++;
 };
 
 userWizardCoat.addEventListener('click', function () {
-  renderColor(userWizardCoat, WIZARD_COATS, counters.coat, coatColorInput);
-  counters.coat++;
+  renderColor(userWizardCoat, WIZARD_COATS, 'coat', coatColorInput, true);
 });
 
 userWizardEyes.addEventListener('click', function () {
-  renderColor(userWizardEyes, WIZARD_EYES, counters.eyes, eyesColorInput);
-  counters.eyes++;
+  renderColor(userWizardEyes, WIZARD_EYES, 'eyes', eyesColorInput, true);
 });
 
-var clickFireballCounter = 1;
 userWizardFireball.addEventListener('click', function () {
-  if (clickFireballCounter >= WIZARD_FIREBALLS.length) {
-    clickFireballCounter = 0;
-  }
-  userWizardFireball.style.background = WIZARD_FIREBALLS[clickFireballCounter];
-  fireballColorInput.value = WIZARD_FIREBALLS[clickFireballCounter];
-  clickFireballCounter++;
+  renderColor(userWizardFireball, WIZARD_FIREBALLS, 'fireball', fireballColorInput);
 });
 
 var generateWizard = function () {
