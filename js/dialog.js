@@ -1,56 +1,31 @@
 'use strict';
 
 (function () {
-  var userDialogInput = window.data.userDialog.querySelector('.setup-user-name');
+
   var userDialogOpen = document.querySelector('.setup-open');
-  var userDialogClose = window.data.userDialog.querySelector('.setup-close');
-  var startCoordsPopup = {
-    x: 0,
-    y: 0
-  };
-  var onPopupEscPress = function (evt) {
-    if ((evt.keyCode === window.data.ESC_KEYCODE) && (document.activeElement !== userDialogInput)) {
-      closePopup();
-    }
-  };
-
-  var openPopup = function () {
-    window.data.userDialog.classList.remove('hidden');
-    document.addEventListener('keydown', onPopupEscPress);
-    if ((startCoordsPopup.x === 0) && (startCoordsPopup.y === 0)) {
-      startCoordsPopup.x = window.data.userDialog.offsetLeft;
-      startCoordsPopup.y = window.data.userDialog.offsetTop;
-    }
-  };
-
-  var closePopup = function () {
-    window.data.userDialog.classList.add('hidden');
-    document.addEventListener('keydown', onPopupEscPress);
-    window.data.userDialog.style.top = startCoordsPopup.y + 'px';
-    window.data.userDialog.style.left = startCoordsPopup.x + 'px';
-  };
+  var userDialogClose = window.setup.userDialog.querySelector('.setup-close');
 
   userDialogOpen.addEventListener('click', function () {
-    openPopup();
+    window.util.openPopup();
   });
 
   userDialogOpen.addEventListener('keydown', function (evt) {
-    if (evt.keyCode === window.data.ENTER_KEYCODE) {
-      openPopup();
+    if (window.util.isEnterEvent(evt)) {
+      window.util.openPopup();
     }
   });
 
   userDialogClose.addEventListener('keydown', function (evt) {
-    if (evt.keyCode === window.data.ENTER_KEYCODE) {
-      closePopup();
+    if (window.util.isEnterEvent(evt)) {
+      window.util.closePopup();
     }
   });
 
   userDialogClose.addEventListener('click', function () {
-    closePopup();
+    window.util.closePopup();
   });
 
-  var dialogHandler = window.data.userDialog.querySelector('.upload');
+  var dialogHandler = window.setup.userDialog.querySelector('.upload');
 
   dialogHandler.addEventListener('mousedown', function (evt) {
     evt.preventDefault();
@@ -74,8 +49,8 @@
         y: moveEvt.clientY
       };
 
-      window.data.userDialog.style.top = (window.data.userDialog.offsetTop - shift.y) + 'px';
-      window.data.userDialog.style.left = (window.data.userDialog.offsetLeft - shift.x) + 'px';
+      window.setup.userDialog.style.top = (window.setup.userDialog.offsetTop - shift.y) + 'px';
+      window.setup.userDialog.style.left = (window.setup.userDialog.offsetLeft - shift.x) + 'px';
     };
 
     var onMouseUp = function (upEvt) {
