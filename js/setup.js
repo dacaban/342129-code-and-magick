@@ -35,16 +35,13 @@
   userWizardCoat.addEventListener('click', function () {
     renderColor(userWizardCoat, WIZARD_COATS, 'coat', coatColorInput, true);
     coatColor = coatColorInput.value;
-    window.updateWizards();
+    window.debounce(window.updateWizards);
   });
 
-  // TODO: Магическое число
   userWizardEyes.addEventListener('click', function () {
     renderColor(userWizardEyes, WIZARD_EYES, 'eyes', eyesColorInput, true);
     eyesColor = eyesColorInput.value;
-    window.setTimeout(function () {
-      window.updateWizards();
-    }, 300);
+    window.debounce(window.updateWizards);
   });
 
   userWizardFireball.addEventListener('click', function () {
