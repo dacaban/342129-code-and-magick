@@ -12,11 +12,15 @@
   };
 
   var isEnterEvent = function (evt) {
-    return (evt.keyCode === ENTER_KEYCODE);
+    return evt.keyCode === ENTER_KEYCODE;
+  };
+
+  var isEscEvent = function (evt) {
+    return evt.keyCode === ESC_KEYCODE;
   };
 
   var onPopupEscPress = function (evt) {
-    if ((evt.keyCode === ESC_KEYCODE) && (document.activeElement !== userDialogInput)) {
+    if (isEscEvent(evt) && document.activeElement !== userDialogInput) {
       closePopup();
     }
   };
