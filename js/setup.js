@@ -19,6 +19,9 @@
     fireball: 1
   };
 
+  var coatColor;
+  var eyesColor;
+
   var renderColor = function (elm, collection, key, colorInput, isSvgElement) {
     var idx = counters[key];
     elm.style[isSvgElement ? 'fill' : 'background'] = colorInput.value = collection[idx];
@@ -31,10 +34,14 @@
 
   userWizardCoat.addEventListener('click', function () {
     renderColor(userWizardCoat, WIZARD_COATS, 'coat', coatColorInput, true);
+    coatColor = coatColorInput.value;
+    window.debounce(window.updateWizards);
   });
 
   userWizardEyes.addEventListener('click', function () {
     renderColor(userWizardEyes, WIZARD_EYES, 'eyes', eyesColorInput, true);
+    eyesColor = eyesColorInput.value;
+    window.debounce(window.updateWizards);
   });
 
   userWizardFireball.addEventListener('click', function () {
@@ -64,6 +71,12 @@
   });
 
   window.setup = {
-    userDialog: userDialog
+    userDialog: userDialog,
+    getCoatColor: function () {
+      return coatColor;
+    },
+    getEyesColor: function () {
+      return eyesColor;
+    }
   };
 })();
